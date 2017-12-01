@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as albumActions from '../../actions/albumActions';
 
-const AlbumList = (props) => {
+export const AlbumList = (props) => {
   const { albums, photos } = props;
 
   const getAlbumPhotos = (album) => {
@@ -20,7 +20,7 @@ const AlbumList = (props) => {
   }
 
   const renderAlbums = () => {
-    const { albumActions } = props;
+    const { deleteAlbum } = props;
     return (
       Object.keys(albums)
       .map(key => {
@@ -50,7 +50,7 @@ const AlbumList = (props) => {
             <DeleteButton
               index={key}
               objectName={album.name}
-              deleteObject={albumActions.deleteAlbum}
+              deleteObject={deleteAlbum}
             />
           </Album>
         );
@@ -82,7 +82,7 @@ const mapStateToProps = (state) => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    albumActions: bindActionCreators(albumActions, dispatch),
+    deleteAlbum: key => dispatch(albumActions.deleteAlbum(key)),
   }
 }
 

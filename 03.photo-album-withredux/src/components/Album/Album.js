@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, Icon, Image, Label, Button } from 'semantic-ui-react';
 import './Album.css';
 
-const Album = (props) => {
+export const Album = (props) => {
   const { album, albumPhotos } = props;
 
   const renderPreviewImages = () => {
