@@ -49,7 +49,7 @@ class PhotoForm extends React.Component {
     const { updatePhoto, createPhoto, index } = this.props;
     const { photo } = this.state;
 
-    if (this.isNewForm()) {
+    if(this.isNewForm()) {
       createPhoto(photo);
     } else {
       updatePhoto(index, photo);
@@ -63,7 +63,7 @@ class PhotoForm extends React.Component {
     this.setState({
       modalOpen: true,
       photo,
-    });
+   });
   }
 
   closeForm = () => this.setState({ modalOpen: false });
@@ -116,7 +116,7 @@ class PhotoForm extends React.Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button positive icon='save' content='Save' onClick={(e) => { this.handleSubmit(e) }} />
+          <Button positive icon='save' content='Save' onClick={(e) => {this.handleSubmit(e)}} />
         </Modal.Actions>
       </Modal>
     );

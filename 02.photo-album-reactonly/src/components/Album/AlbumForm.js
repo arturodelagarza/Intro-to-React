@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Form, Button, Icon, Message } from 'semantic-ui-react'
+import { connect } from 'react-redux';
+import * as albumActions from '../../actions/albumActions';
 
 class AlbumForm extends React.Component {
   state = {
@@ -63,7 +65,7 @@ class AlbumForm extends React.Component {
     this.setState({
       modalOpen: true,
       album,
-   });
+    });
   }
 
   closeForm = () => this.setState({ modalOpen: false });
@@ -74,14 +76,14 @@ class AlbumForm extends React.Component {
     const { photos } = this.props;
 
     const options = Object.keys(photos)
-                    .map(key => {
-                      const photo = photos[key];
-                      return {
-                        text: photo.title,
-                        value: key,
-                        image: { avatar: true, src: photo.url }
-                      }
-                    });
+      .map(key => {
+        const photo = photos[key];
+        return {
+          text: photo.title,
+          value: key,
+          image: { avatar: true, src: photo.url }
+        }
+      });
 
     return (
       <Modal
@@ -142,7 +144,7 @@ class AlbumForm extends React.Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button positive icon='save' content='Save' onClick={(e) => {this.handleSubmit(e)}} />
+          <Button positive icon='save' content='Save' onClick={(e) => { this.handleSubmit(e) }} />
         </Modal.Actions>
       </Modal>
     );
@@ -150,12 +152,23 @@ class AlbumForm extends React.Component {
 
   static propTypes = {
     formType: PropTypes.oneOf(['New', 'Edit']).isRequired,
-    photos: PropTypes.object.isRequired,
-    album:  PropTypes.object,
+    album: PropTypes.object,
     index: PropTypes.string,
-    editAlbum: PropTypes.func,
-    createAlbum: PropTypes.func,
   }
 }
 
-export default AlbumForm;
+const mapStateToProps = (state) => {
+  return {
+    albums: state.albums,
+    photos: state.photos,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createAlbum: album => dispatch(albumActions.addAlbum(album)),
+    updateAlbum: (key, album) => dispatch(albumActions.updateAlbum(key, album)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumForm);
